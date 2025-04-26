@@ -19,7 +19,7 @@ require (
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.3
 	gitlab.eclipse.org/eclipse/xfsc/libraries/crypto/engine/core v1.2.0
-	gitlab.eclipse.org/eclipse/xfsc/libraries/crypto/jwt v1.0.1
+	gitlab.eclipse.org/eclipse/xfsc/libraries/crypto/jwt v1.1.0
 	gitlab.eclipse.org/eclipse/xfsc/libraries/messaging/cloudeventprovider v0.1.4
 	gitlab.eclipse.org/eclipse/xfsc/libraries/microservice/core v1.0.3
 	gitlab.eclipse.org/eclipse/xfsc/libraries/ssi/oid4vip v1.3.4
@@ -32,12 +32,8 @@ require (
 	github.com/Azure/go-amqp v0.17.0 // indirect
 	github.com/IBM/sarama v1.42.2 // indirect
 	github.com/KyleBanks/depth v1.2.1 // indirect
-	github.com/PuerkitoBio/purell v1.2.1 // indirect
-	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/bytedance/sonic v1.11.9 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
-	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
-	github.com/chenzhuoyu/iasm v0.9.1 // indirect
 	github.com/cloudevents/sdk-go/protocol/amqp/v2 v2.14.0 // indirect
 	github.com/cloudevents/sdk-go/protocol/kafka_sarama/v2 v2.15.0 // indirect
 	github.com/cloudevents/sdk-go/protocol/mqtt_paho/v2 v2.0.0-20240212142714-4cc6c2d62d63 // indirect
@@ -120,6 +116,7 @@ require (
 	github.com/swaggo/files v1.0.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
+	gitlab.eclipse.org/eclipse/xfsc/libraries/ssi/did-core v0.0.0-20231111104828-469416951f96 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/arch v0.8.0 // indirect
@@ -132,6 +129,5 @@ require (
 	golang.org/x/tools v0.21.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
