@@ -1,0 +1,42 @@
+serviceName: account-service
+serverMode: production
+isDev: true
+logLevel: info
+servingPort: 8070
+messaging:
+  protocol: nats
+  nats:
+    withNats: true
+    url: nats://localhost:4222
+  #  queueGroup: logger #optional
+    timeoutInSec: 10 #optional
+protocol: nats
+
+nats:
+  withNats: true
+  url: nats://nats:4222
+#  queueGroup: logger #optional
+  timeoutInSec: 10 #optional
+cloudevents:
+  topics: [didcomm-connector-invitation]
+keycloak:
+  url: https://auth-cloud-wallet.xfsc.dev
+  realmName: react-keycloak
+  tokenTTL: 250ms
+db:
+  withDB: true
+  dbType: postgres
+  host: host.docker.internal
+  port: 5432
+  dbName: app
+  user: app
+  password: change me
+storage:
+  url: http://localhost:8000/v1/tenants/tenant_space/storage
+  keyPath: "/kwt.pem"
+  withAuth: false
+
+didcomm:
+  url: http://localhost:9080
+
+backupLinkTTL: 300s

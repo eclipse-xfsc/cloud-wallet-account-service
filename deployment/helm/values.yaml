@@ -1,0 +1,68 @@
+image:
+  repository: node-654e3bca7fbeeed18f81d7c7.ps-xaas.io/pcm-cloud/account-service
+  imagePullPolicy: Always
+  tag: main
+#  tag: debug
+
+service:
+  host: cloud-wallet.xfsc.dev
+  port: 8080
+#  serverMode: debug
+  serverMode: production
+  logLevel: info
+
+cors:
+  active: true
+  origins: "*"
+  methods: "PUT, GET, POST, OPTIONS, DELETE"
+
+config:
+  backupLinkTTL: 300s
+
+  nats:
+    withNats: true
+    url: nats.nats.svc.cluster.local:4222
+    queueGroup: account-service
+    timeoutInSec: 10s
+
+  db:
+    withDB: true
+    host: postgres-postgresql.postgres.svc.cluster.local
+    port: 5432
+    dbName: accounts
+    userSecretKey: postgresql-username
+    passwordSecretName: account-db
+    passwordSecretKey: postgresql-password
+
+  keycloak:
+    url: http://keycloak.keycloak.svc.cluster.local
+    realmName: cloudpcm
+    tokenTTL: 250ns
+    excludeEndpoints: /v1/tenants/:tenantId/api/accounts/credentials/backup/:id/:bid
+
+
+  storage:
+    url: http://storage-service.default.svc.cluster.local:8080/v1/tenants/tenant_space/storage
+    withAuth: false
+  
+  didcomm:
+    url: http://didcomm-connector.default.svc.cluster.local:9090
+
+  signer:
+    url: http://signer.default.svc.cluster.local:8080
+
+  retrieval:
+    url: http://credential-retrieval-service.default.svc.cluster.local:8080/v1/tenants/tenant_space
+    offeringTopic: offering
+
+  credentialVerifier:
+    url: http://credential-verification-service.default.svc.cluster.local:8080/v1/tenants/tenant_space/internal
+
+  pluginDiscovery:
+    url: http://plugin-discovery-service-service.default.svc.cluster.local:8080/v1/tenants/tenant_space
+
+  vault:
+    address: http://vault.vault.svc.cluster.local:8200
+    tokenName: vault
+    tokenKey: token
+

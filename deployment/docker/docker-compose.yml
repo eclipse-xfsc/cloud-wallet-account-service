@@ -1,0 +1,77 @@
+version: "3.8"
+
+networks:
+  nats:
+    driver: bridge
+
+services:
+  server:
+    image: ${IMAGE_REPO}:${IMAGE_TAG}
+    build:
+      context: ../../.
+      dockerfile: ./deployment/docker/Dockerfile
+      args:
+        pluginRepoUrl: https://gitlab.eclipse.org/eclipse/xfsc/libraries/crypto/engine/plugins/hashicorp-vault-provider.git
+        pluginVersion: v1.2.3
+
+    ports:
+      - "8080:8080"
+    volumes:
+      - ".:/app"
+#    depends_on:
+#      - db
+#      - nats
+#    links:
+#      - "db:database"
+    networks:
+      - nats
+    env_file:
+      - ../../.env
+      - ../../.env.credentials
+
+  nats:
+    image: nats:latest
+#    container_name: nats_container
+    restart: always
+    ports:
+      - '4222:4222' # NATS server port
+      - '8222:8222' # NATS server monitoring port
+    networks:
+      - nats
+
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB_NAME
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    networks:
+      - nats
+
+  vault:
+    image: hashicorp/vault:latest
+    ports:
+      - "8200:8200"
+    networks:
+      - nats
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: $VAULT_TOKEN
+
+#open source database management platform for postgres
+#  pgadmin:
+#    container_name: pgadmin4_container
+#    image: dpage/pgadmin4
+#    restart: always
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+#      PGADMIN_DEFAULT_PASSWORD: root
+#    ports:
+#      - "5050:80"
+
+volumes:
+  postgres-db:

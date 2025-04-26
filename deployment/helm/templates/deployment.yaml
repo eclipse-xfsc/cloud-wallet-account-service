@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - name: account-service-container
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.imagePullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /v1/metrics/health
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 2
+            failureThreshold: 2
+            timeoutSeconds: 5
+
+          env:
+            - name: LISTEN_PORT
+              value: "{{ .Values.service.port}}"
+            - name: ACCOUNT_SERVERMODE
+              value: "{{ .Values.service.serverMode}}"
+            - name: LOG_LEVEL
+              value: "{{ .Values.service.logLevel}}"
+
+            - name: ACCOUNT_NATS_WITHNATS
+              value: "{{ .Values.config.nats.withNats}}"
+            - name: ACCOUNT_NATS_TIMEOUTINSEC
+              value: "{{ .Values.config.nats.timeoutInSec}}"
+            - name: ACCOUNT_NATS_URL
+              value: "{{ .Values.config.nats.url}}"
+            - name: ACCOUNT_NATS_QUEUEGROUP
+              value: "{{ .Values.config.nats.queueGroup}}"
+
+            - name: ACCOUNT_CLOUDEVENTS_TOPICS
+              value: "didcomm-connector-invitation"
+            - name: ACCOUNT_MESSAGING_PROTOCOL
+              value: "nats"
+            - name: ACCOUNT_MESSAGING_NATS_WITH_NATS
+              value: "{{ .Values.config.nats.withNats}}"
+            - name: ACCOUNT_MESSAGING_NATS_URL
+              value: "{{ .Values.config.nats.url}}"
+            - name: ACCOUNT_MESSAGING_NATS_TIMEOUTINSEC
+              value: "{{ .Values.config.nats.timeoutInSec}}"
+            - name: ACCOUNT_PROTOCOL
+              value: "nats"
+            
+
+            - name: ACCOUNT_DB_WITHDB
+              value: "{{ .Values.config.db.withDB}}"
+            - name: ACCOUNT_DB_TYPE
+              value: "postgres"
+            - name: ACCOUNT_DB_HOST
+              value: {{.Values.config.db.host}}
+            - name: ACCOUNT_DB_PORT
+              value: "{{.Values.config.db.port}}"
+            - name: ACCOUNT_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.db.passwordSecretName }}
+                  key: {{ .Values.config.db.userSecretKey }}
+            - name: ACCOUNT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.db.passwordSecretName }}
+                  key: {{ .Values.config.db.passwordSecretKey }}
+            - name: ACCOUNT_DB_NAME
+              value: {{.Values.config.db.dbName}}
+
+            - name: ACCOUNT_KEYCLOAK_URL
+              value: {{.Values.config.keycloak.url}}
+            - name: ACCOUNT_KEYCLOAK_REALMNAME
+              value: {{.Values.config.keycloak.realmName}}
+            - name: ACCOUNT_KEYCLOAK_TOKENTTL
+              value: {{.Values.config.keycloak.tokenTTL}}
+            - name: ACCOUNT_KEYCLOAK_EXCLUDEENDPOINTS
+              value: {{.Values.config.keycloak.excludeEndpoints}}
+
+            - name: ACCOUNT_STORAGE_URL
+              value: {{.Values.config.storage.url}}
+            - name: ACCOUNT_STORAGE_WITHAUTH
+              value: "{{.Values.config.storage.withAuth}}"
+
+            - name: ACCOUNT_BACKUPLINKTTL
+              value: {{.Values.config.backupLinkTTL}}
+            
+            - name: ACCOUNT_DIDCOMM_URL
+              value: {{.Values.config.didcomm.url}}
+            - name: ACCOUNT_SIGNER_URL
+              value: {{.Values.config.signer.url}}
+
+            - name: ACCOUNT_CREDENTIALRETRIEVAL_URL
+              value: {{.Values.config.retrieval.url}}
+            - name: ACCOUNT_CREDENTIALRETRIEVAL_OFFERTOPIC
+              value: {{.Values.config.retrieval.offeringTopic}}
+
+            - name: ACCOUNT_CREDENTIALVERIFIER_URL
+              value: {{.Values.config.credentialVerifier.url}}
+
+            - name: ACCOUNT_PLUGINDISCOVERY_URL
+              value: {{.Values.config.pluginDiscovery.url}}
+
+            {{- if .Values.config.vault }}
+            - name: "VAULT_ADRESS"
+              value: {{.Values.config.vault.address}}
+            - name: "VAULT_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Values.config.vault.tokenName}}
+                  key: {{.Values.config.vault.tokenKey}}
+            {{- end }}

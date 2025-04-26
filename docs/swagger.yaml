@@ -1,0 +1,1343 @@
+definitions:
+  common.RecordEventType:
+    enum:
+    - consent
+    - pairing
+    - issued
+    - presented
+    - revoked
+    - presentationRequest
+    - device.connection
+    type: string
+    x-enum-varnames:
+    - Consent
+    - Pairing
+    - Issued
+    - Presented
+    - Revoked
+    - PresentationRequest
+    - DeviceConnection
+  common.ServerErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  common.UserInfo:
+    properties:
+      address:
+        $ref: '#/definitions/gocloak.UserInfoAddress'
+      email:
+        type: string
+      email_verified:
+        type: boolean
+      family_name:
+        type: string
+      gender:
+        type: string
+      given_name:
+        type: string
+      locale:
+        type: string
+      middle_name:
+        type: string
+      name:
+        type: string
+      nickname:
+        type: string
+      phone_number:
+        type: string
+      phone_number_verified:
+        type: boolean
+      picture:
+        type: string
+      preferred_username:
+        type: string
+      profile:
+        type: string
+      sub:
+        type: string
+      updated_at:
+        type: integer
+      website:
+        type: string
+      zoneinfo:
+        type: string
+    type: object
+  credential.AuthorizationCode:
+    properties:
+      issuer_state:
+        type: string
+    type: object
+  credential.CredentialConfiguration:
+    properties:
+      claims:
+        additionalProperties: true
+        type: object
+      credential_definition:
+        $ref: '#/definitions/credential.CredentialDefinition'
+      credential_signing_alg_values_supported:
+        items:
+          type: string
+        type: array
+      cryptographic_binding_methods_supported:
+        items:
+          type: string
+        type: array
+      display:
+        items:
+          $ref: '#/definitions/credential.LocalizedCredential'
+        type: array
+      format:
+        type: string
+      order:
+        items:
+          type: string
+        type: array
+      proof_types_supported:
+        additionalProperties:
+          $ref: '#/definitions/credential.ProofType'
+        type: object
+      schema:
+        additionalProperties: true
+        description: /Out of OID Spec, but useful
+        type: object
+      scope:
+        type: string
+      topic:
+        description: Subject of the credential within the system
+        type: string
+      vct:
+        type: string
+    type: object
+  credential.CredentialDefinition:
+    properties:
+      credentialSubject:
+        additionalProperties:
+          $ref: '#/definitions/credential.CredentialSubject'
+        type: object
+      type:
+        items:
+          type: string
+        type: array
+    type: object
+  credential.CredentialOffer:
+    properties:
+      credential_offer:
+        type: string
+      credential_offer_uri:
+        type: string
+    type: object
+  credential.CredentialOfferParameters:
+    properties:
+      credential_configuration_ids:
+        items:
+          type: string
+        type: array
+      credential_issuer:
+        type: string
+      grants:
+        $ref: '#/definitions/credential.Grants'
+    type: object
+  credential.CredentialRespEnc:
+    properties:
+      alg_values_supported:
+        items:
+          type: string
+        type: array
+      enc_values_supported:
+        items:
+          type: string
+        type: array
+      encryption_required:
+        type: boolean
+    type: object
+  credential.CredentialSubject:
+    properties:
+      display:
+        items:
+          $ref: '#/definitions/credential.Display'
+        type: array
+    type: object
+  credential.DescriptiveURL:
+    properties:
+      alternative_text:
+        type: string
+      url:
+        type: string
+    type: object
+  credential.Display:
+    properties:
+      locale:
+        type: string
+      name:
+        type: string
+    type: object
+  credential.Grants:
+    properties:
+      authorization_code:
+        $ref: '#/definitions/credential.AuthorizationCode'
+      urn:ietf:params:oauth:grant-type:pre-authorized_code:
+        $ref: '#/definitions/credential.PreAuthorizedCode'
+    type: object
+  credential.IssuerMetadata:
+    properties:
+      authorization_servers:
+        items:
+          type: string
+        type: array
+      batch_credential_endpoint:
+        type: string
+      credential_configurations_supported:
+        additionalProperties:
+          $ref: '#/definitions/credential.CredentialConfiguration'
+        type: object
+      credential_endpoint:
+        type: string
+      credential_identifiers_supported:
+        type: boolean
+      credential_issuer:
+        type: string
+      credential_response_encryption:
+        $ref: '#/definitions/credential.CredentialRespEnc'
+      deferred_credential_endpoint:
+        type: string
+      display:
+        items:
+          $ref: '#/definitions/credential.LocalizedCredential'
+        type: array
+      notification_endpoint:
+        type: string
+      signed_metadata:
+        type: string
+    type: object
+  credential.LocalizedCredential:
+    properties:
+      background_color:
+        type: string
+      locale:
+        type: string
+      logo:
+        $ref: '#/definitions/credential.DescriptiveURL'
+      name:
+        type: string
+      text_color:
+        type: string
+    type: object
+  credential.PreAuthorizedCode:
+    properties:
+      authorization_server:
+        type: string
+      interval:
+        type: integer
+      pre-authorized_code:
+        type: string
+      tx_code:
+        $ref: '#/definitions/credential.TxCode'
+    type: object
+  credential.ProofType:
+    properties:
+      proof_signing_alg_values_supported:
+        items:
+          type: string
+        type: array
+    type: object
+  credential.TxCode:
+    properties:
+      description:
+        type: string
+      input_mode:
+        type: string
+      length:
+        type: integer
+    type: object
+  gocloak.UserInfoAddress:
+    properties:
+      country:
+        type: string
+      formatted:
+        type: string
+      locality:
+        type: string
+      postal_code:
+        type: string
+      region:
+        type: string
+      street_address:
+        type: string
+    type: object
+  handlers.CreateDidPayload:
+    properties:
+      keyType:
+        $ref: '#/definitions/types.KeyType'
+    type: object
+  handlers.CreateProofPayload:
+    properties:
+      filters:
+        items:
+          $ref: '#/definitions/presentation.FilterResult'
+        type: array
+      signKeyId:
+        type: string
+    type: object
+  handlers.DID:
+    properties:
+      detail:
+        type: string
+      did:
+        type: string
+      id:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  handlers.Event:
+    properties:
+      event:
+        type: string
+      timestamp:
+        type: string
+      type:
+        $ref: '#/definitions/common.RecordEventType'
+      userId:
+        type: string
+    type: object
+  handlers.IssueCredentialRequestBody:
+    properties:
+      payload:
+        additionalProperties: true
+        type: object
+      type:
+        type: string
+    type: object
+  handlers.ListCredentialRequestBody:
+    properties:
+      search:
+        type: string
+    type: object
+  handlers.ListDIDResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/handlers.DID'
+        type: array
+    type: object
+  handlers.ListHistoryOutput:
+    properties:
+      events:
+        items:
+          $ref: '#/definitions/handlers.Event'
+        type: array
+    type: object
+  handlers.ListPluginsResponse:
+    properties:
+      plugins:
+        items:
+          $ref: '#/definitions/services.Plugin'
+        type: array
+    type: object
+  handlers.SaveConfigrationsRequest:
+    properties:
+      historyLimit:
+        type: integer
+      language:
+        type: string
+    required:
+    - historyLimit
+    - language
+    type: object
+  presentation.Alg:
+    enum:
+    - EdDSA
+    - ES256
+    - PS256
+    type: string
+    x-enum-varnames:
+    - EDDSA
+    - ES256
+    - PS256
+  presentation.Constraints:
+    properties:
+      fields:
+        description: The constraints object MAY contain a fields property
+        items:
+          $ref: '#/definitions/presentation.Field'
+        type: array
+      limit_disclosure:
+        allOf:
+        - $ref: '#/definitions/presentation.Disclosure'
+        description: The constraints object MAY contain a limit_disclosure property
+    type: object
+  presentation.Description:
+    properties:
+      format:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      purpose:
+        type: string
+    type: object
+  presentation.Disclosure:
+    enum:
+    - required
+    - preferred
+    type: string
+    x-enum-varnames:
+    - Required
+    - Preferred
+  presentation.Field:
+    properties:
+      filter:
+        allOf:
+        - $ref: '#/definitions/presentation.Filter'
+        description: Optional Field
+      id:
+        description: Optional Field
+        type: string
+      name:
+        description: Optional Field
+        type: string
+      path:
+        description: Mandatory Field
+        items:
+          type: string
+        type: array
+      purpose:
+        description: Optional Field
+        type: string
+    type: object
+  presentation.Filter:
+    properties:
+      pattern:
+        type: string
+      type:
+        type: string
+    type: object
+  presentation.FilterResult:
+    properties:
+      credentials:
+        additionalProperties: true
+        type: object
+      description:
+        $ref: '#/definitions/presentation.Description'
+    type: object
+  presentation.Format:
+    properties:
+      jwt:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      jwt_vc:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      jwt_vp:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      ldp:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      ldp_vc:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      ldp_vp:
+        $ref: '#/definitions/presentation.FormatSpecification'
+      verifiable-credential+sd-jwt:
+        $ref: '#/definitions/presentation.FormatSpecification'
+    type: object
+  presentation.FormatSpecification:
+    properties:
+      alg:
+        items:
+          $ref: '#/definitions/presentation.Alg'
+        type: array
+      proof_type:
+        items:
+          $ref: '#/definitions/presentation.ProofType'
+        type: array
+    type: object
+  presentation.InputDescriptor:
+    properties:
+      constraints:
+        $ref: '#/definitions/presentation.Constraints'
+      format:
+        $ref: '#/definitions/presentation.Format'
+      group:
+        items:
+          type: string
+        type: array
+      id:
+        type: string
+      name:
+        type: string
+      purpose:
+        type: string
+    type: object
+  presentation.PresentationDefinition:
+    properties:
+      format:
+        $ref: '#/definitions/presentation.Format'
+      id:
+        type: string
+      input_descriptors:
+        items:
+          $ref: '#/definitions/presentation.InputDescriptor'
+        type: array
+      name:
+        type: string
+      purpose:
+        type: string
+      submission_requirements:
+        items:
+          $ref: '#/definitions/presentation.SubmissionRequirement'
+        type: array
+    type: object
+  presentation.ProofType:
+    enum:
+    - JsonWebSignature2020
+    - Ed25519Signature2018
+    - EcdsaSecp256k1Signature2019
+    - RsaSignature2018
+    type: string
+    x-enum-varnames:
+    - JsonWebSignature2020
+    - Ed25519Signature2018
+    - EcdsaSecp256k1Signature2019
+    - RsaSignature2018
+  presentation.Rule:
+    enum:
+    - all
+    - pick
+    type: string
+    x-enum-varnames:
+    - All
+    - Pick
+  presentation.SubmissionRequirement:
+    properties:
+      from:
+        type: string
+      name:
+        type: string
+      purpose:
+        type: string
+      rule:
+        $ref: '#/definitions/presentation.Rule'
+    type: object
+  services.CredentialOffer:
+    properties:
+      groupId:
+        type: string
+      metadata:
+        $ref: '#/definitions/credential.IssuerMetadata'
+      offering:
+        $ref: '#/definitions/credential.CredentialOfferParameters'
+      requestId:
+        type: string
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  services.DIDCommConnection:
+    properties:
+      added:
+        type: string
+      eventType:
+        type: string
+      group:
+        type: string
+      properties:
+        additionalProperties:
+          type: string
+        type: object
+      protocol:
+        type: string
+      recipientDids:
+        items:
+          type: string
+        type: array
+      remoteDid:
+        type: string
+      routingKey:
+        type: string
+      topic:
+        type: string
+    type: object
+  services.Plugin:
+    properties:
+      name:
+        type: string
+      route:
+        type: string
+      url:
+        type: string
+    type: object
+  types.KeyType:
+    enum:
+    - aes256-gcm96
+    - ed25519
+    - ecdsa-p256
+    - ecdsa-p384
+    - ecdsa-p521
+    - rsa-2048
+    - rsa-3072
+    - rsa-4096
+    - keyValue
+    type: string
+    x-enum-varnames:
+    - Aes256GCM
+    - Ed25519
+    - Ecdsap256
+    - Ecdsap384
+    - Ecdsap521
+    - Rsa2048
+    - Rsa3072
+    - Rsa4096
+    - KeyValue
+host: localhost:8080
+info:
+  contact: {}
+  description: API Gateway for the personal credential manager cloud services
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Account service API
+  version: "1.0"
+paths:
+  /configurations/getUserInfo:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves user information
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.UserInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get user information
+      tags:
+      - configurations
+  /configurations/list:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves configurations
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get configurations
+      tags:
+      - configurations
+  /configurations/save:
+    post:
+      consumes:
+      - application/json
+      description: Saves configurations
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Configurations
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SaveConfigrationsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Save configurations
+      tags:
+      - configurations
+  /credentials/issue:
+    post:
+      consumes:
+      - application/json
+      description: Requests the issuance of a credential
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: type and credential subject
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.IssueCredentialRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/credential.CredentialOffer'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Request issuance of a credential
+      tags:
+      - credentials
+  /credentials/list:
+    get:
+      consumes:
+      - application/json
+      description: Lists all credentials
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Search
+        in: body
+        name: search
+        schema:
+          $ref: '#/definitions/handlers.ListCredentialRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/presentation.FilterResult'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: List credentials
+      tags:
+      - credentials
+  /credentials/offers/accept/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Accept a credential offer
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Offer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+      summary: Accept a credential offer
+      tags:
+      - credentials
+  /credentials/offers/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a credential offer
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ID of created offering request
+      summary: Create a credential offer
+      tags:
+      - credentials
+  /credentials/offers/deny/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Deny a credential offer
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Offer ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+      summary: Deny a credential offer
+      tags:
+      - credentials
+  /credentials/offers/list:
+    get:
+      consumes:
+      - application/json
+      description: Routes for handling credential offers
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/services.CredentialOffer'
+            type: array
+      summary: Credential Offer Routes
+      tags:
+      - credentials
+  /credentials/schemas:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all credential configurations
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              $ref: '#/definitions/credential.CredentialConfiguration'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get credential configurations
+      tags:
+      - credentials
+  /devices/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a device
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Delete a device
+      tags:
+      - device
+  /devices/block/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Blocks a device
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Device ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+      summary: Block a device
+      tags:
+      - device
+  /devices/link:
+    get:
+      consumes:
+      - application/json
+      description: Links a device
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Link
+          schema:
+            type: string
+      summary: Link a device
+      tags:
+      - device
+  /devices/list:
+    get:
+      consumes:
+      - application/json
+      description: Lists all devices
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/services.DIDCommConnection'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: List devices
+      tags:
+      - device
+  /history/list:
+    get:
+      consumes:
+      - application/json
+      description: Lists all history events
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.ListHistoryOutput'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: List history
+      tags:
+      - history
+  /kms/did/{kid}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a DID
+      parameters:
+      - description: DID ID
+        in: path
+        name: kid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Delete a DID
+      tags:
+      - kms
+  /kms/did/create:
+    post:
+      consumes:
+      - application/json
+      description: Creates a DID
+      parameters:
+      - description: DID payload
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateDidPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID ID
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Create a DID
+      tags:
+      - kms
+  /kms/did/list:
+    get:
+      consumes:
+      - application/json
+      description: Lists all DIDs
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.ListDIDResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: List all DIDs
+      tags:
+      - kms
+  /kms/keyTypes:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the supported keys algorithms
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/types.KeyType'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get supported keys algorithms
+      tags:
+      - kms
+  /plugin-discovery:
+    get:
+      consumes:
+      - application/json
+      description: List all plugins
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.ListPluginsResponse'
+      summary: List plugins
+      tags:
+      - plugins
+  /presentations/list:
+    get:
+      consumes:
+      - application/json
+      description: Lists all presentations
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Search
+        in: body
+        name: search
+        schema:
+          $ref: '#/definitions/handlers.ListCredentialRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/presentation.FilterResult'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: List presentations
+      tags:
+      - presentations
+  /presentations/proof/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Creates a presentation
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Presentation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Proof payload
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateProofPayload'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Create a presentation
+      tags:
+      - presentations
+  /presentations/selection/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a presentation request
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      - description: Presentation ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/presentation.FilterResult'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get presentation request
+      tags:
+      - presentations
+  /presentations/selection/all:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all presentation definitions
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Tenant ID
+        in: path
+        name: tenantId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/presentation.PresentationDefinition'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.ServerErrorResponse'
+      summary: Get presentation definitions
+      tags:
+      - presentations
+swagger: "2.0"

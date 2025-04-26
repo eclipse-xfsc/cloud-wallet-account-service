@@ -1,0 +1,2011 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API Gateway for the personal credential manager cloud services",
+        "title": "Account service API",
+        "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/configurations/getUserInfo": {
+            "get": {
+                "description": "Retrieves user information",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "configurations"
+                ],
+                "summary": "Get user information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.UserInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configurations/list": {
+            "get": {
+                "description": "Retrieves configurations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "configurations"
+                ],
+                "summary": "Get configurations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/configurations/save": {
+            "post": {
+                "description": "Saves configurations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "configurations"
+                ],
+                "summary": "Save configurations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Configurations",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.SaveConfigrationsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/credentials/issue": {
+            "post": {
+                "description": "Requests the issuance of a credential",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Request issuance of a credential",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "type and credential subject",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.IssueCredentialRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/credential.CredentialOffer"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/credentials/list": {
+            "get": {
+                "description": "Lists all credentials",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "List credentials",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Search",
+                        "name": "search",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ListCredentialRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/presentation.FilterResult"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/credentials/offers/accept/{id}": {
+            "post": {
+                "description": "Accept a credential offer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Accept a credential offer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Offer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/credentials/offers/create": {
+            "post": {
+                "description": "Create a credential offer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Create a credential offer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ID of created offering request"
+                    }
+                }
+            }
+        },
+        "/credentials/offers/deny/{id}": {
+            "post": {
+                "description": "Deny a credential offer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Deny a credential offer",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Offer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/credentials/offers/list": {
+            "get": {
+                "description": "Routes for handling credential offers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Credential Offer Routes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/services.CredentialOffer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/credentials/schemas": {
+            "get": {
+                "description": "Retrieves all credential configurations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "credentials"
+                ],
+                "summary": "Get credential configurations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/credential.CredentialConfiguration"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/block/{id}": {
+            "post": {
+                "description": "Blocks a device",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "device"
+                ],
+                "summary": "Block a device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Device ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/devices/link": {
+            "get": {
+                "description": "Links a device",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "device"
+                ],
+                "summary": "Link a device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Link",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/list": {
+            "get": {
+                "description": "Lists all devices",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "device"
+                ],
+                "summary": "List devices",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/services.DIDCommConnection"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devices/{id}": {
+            "delete": {
+                "description": "Deletes a device",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "device"
+                ],
+                "summary": "Delete a device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Device ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/history/list": {
+            "get": {
+                "description": "Lists all history events",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "history"
+                ],
+                "summary": "List history",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ListHistoryOutput"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kms/did/create": {
+            "post": {
+                "description": "Creates a DID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kms"
+                ],
+                "summary": "Create a DID",
+                "parameters": [
+                    {
+                        "description": "DID payload",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.CreateDidPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "DID ID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kms/did/list": {
+            "get": {
+                "description": "Lists all DIDs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kms"
+                ],
+                "summary": "List all DIDs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ListDIDResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kms/did/{kid}": {
+            "delete": {
+                "description": "Deletes a DID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kms"
+                ],
+                "summary": "Delete a DID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "DID ID",
+                        "name": "kid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/kms/keyTypes": {
+            "get": {
+                "description": "Retrieves the supported keys algorithms",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kms"
+                ],
+                "summary": "Get supported keys algorithms",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.KeyType"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/plugin-discovery": {
+            "get": {
+                "description": "List all plugins",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "plugins"
+                ],
+                "summary": "List plugins",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ListPluginsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/presentations/list": {
+            "get": {
+                "description": "Lists all presentations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "presentations"
+                ],
+                "summary": "List presentations",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Search",
+                        "name": "search",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ListCredentialRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/presentation.FilterResult"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/presentations/proof/{id}": {
+            "post": {
+                "description": "Creates a presentation",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "presentations"
+                ],
+                "summary": "Create a presentation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Presentation ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Proof payload",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers.CreateProofPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/presentations/selection/all": {
+            "get": {
+                "description": "Retrieves all presentation definitions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "presentations"
+                ],
+                "summary": "Get presentation definitions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/presentation.PresentationDefinition"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/presentations/selection/{id}": {
+            "get": {
+                "description": "Retrieves a presentation request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "presentations"
+                ],
+                "summary": "Get presentation request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tenant ID",
+                        "name": "tenantId",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Presentation ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/presentation.FilterResult"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.ServerErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "common.RecordEventType": {
+            "type": "string",
+            "enum": [
+                "consent",
+                "pairing",
+                "issued",
+                "presented",
+                "revoked",
+                "presentationRequest",
+                "device.connection"
+            ],
+            "x-enum-varnames": [
+                "Consent",
+                "Pairing",
+                "Issued",
+                "Presented",
+                "Revoked",
+                "PresentationRequest",
+                "DeviceConnection"
+            ]
+        },
+        "common.ServerErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "common.UserInfo": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/gocloak.UserInfoAddress"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "email_verified": {
+                    "type": "boolean"
+                },
+                "family_name": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "given_name": {
+                    "type": "string"
+                },
+                "locale": {
+                    "type": "string"
+                },
+                "middle_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "phone_number_verified": {
+                    "type": "boolean"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "preferred_username": {
+                    "type": "string"
+                },
+                "profile": {
+                    "type": "string"
+                },
+                "sub": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "integer"
+                },
+                "website": {
+                    "type": "string"
+                },
+                "zoneinfo": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.AuthorizationCode": {
+            "type": "object",
+            "properties": {
+                "issuer_state": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.CredentialConfiguration": {
+            "type": "object",
+            "properties": {
+                "claims": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "credential_definition": {
+                    "$ref": "#/definitions/credential.CredentialDefinition"
+                },
+                "credential_signing_alg_values_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "cryptographic_binding_methods_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "display": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/credential.LocalizedCredential"
+                    }
+                },
+                "format": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "proof_types_supported": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/credential.ProofType"
+                    }
+                },
+                "schema": {
+                    "description": "/Out of OID Spec, but useful",
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "scope": {
+                    "type": "string"
+                },
+                "topic": {
+                    "description": "Subject of the credential within the system",
+                    "type": "string"
+                },
+                "vct": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.CredentialDefinition": {
+            "type": "object",
+            "properties": {
+                "credentialSubject": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/credential.CredentialSubject"
+                    }
+                },
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "credential.CredentialOffer": {
+            "type": "object",
+            "properties": {
+                "credential_offer": {
+                    "type": "string"
+                },
+                "credential_offer_uri": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.CredentialOfferParameters": {
+            "type": "object",
+            "properties": {
+                "credential_configuration_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "credential_issuer": {
+                    "type": "string"
+                },
+                "grants": {
+                    "$ref": "#/definitions/credential.Grants"
+                }
+            }
+        },
+        "credential.CredentialRespEnc": {
+            "type": "object",
+            "properties": {
+                "alg_values_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "enc_values_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "encryption_required": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "credential.CredentialSubject": {
+            "type": "object",
+            "properties": {
+                "display": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/credential.Display"
+                    }
+                }
+            }
+        },
+        "credential.DescriptiveURL": {
+            "type": "object",
+            "properties": {
+                "alternative_text": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.Display": {
+            "type": "object",
+            "properties": {
+                "locale": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.Grants": {
+            "type": "object",
+            "properties": {
+                "authorization_code": {
+                    "$ref": "#/definitions/credential.AuthorizationCode"
+                },
+                "urn:ietf:params:oauth:grant-type:pre-authorized_code": {
+                    "$ref": "#/definitions/credential.PreAuthorizedCode"
+                }
+            }
+        },
+        "credential.IssuerMetadata": {
+            "type": "object",
+            "properties": {
+                "authorization_servers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "batch_credential_endpoint": {
+                    "type": "string"
+                },
+                "credential_configurations_supported": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/credential.CredentialConfiguration"
+                    }
+                },
+                "credential_endpoint": {
+                    "type": "string"
+                },
+                "credential_identifiers_supported": {
+                    "type": "boolean"
+                },
+                "credential_issuer": {
+                    "type": "string"
+                },
+                "credential_response_encryption": {
+                    "$ref": "#/definitions/credential.CredentialRespEnc"
+                },
+                "deferred_credential_endpoint": {
+                    "type": "string"
+                },
+                "display": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/credential.LocalizedCredential"
+                    }
+                },
+                "notification_endpoint": {
+                    "type": "string"
+                },
+                "signed_metadata": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.LocalizedCredential": {
+            "type": "object",
+            "properties": {
+                "background_color": {
+                    "type": "string"
+                },
+                "locale": {
+                    "type": "string"
+                },
+                "logo": {
+                    "$ref": "#/definitions/credential.DescriptiveURL"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "text_color": {
+                    "type": "string"
+                }
+            }
+        },
+        "credential.PreAuthorizedCode": {
+            "type": "object",
+            "properties": {
+                "authorization_server": {
+                    "type": "string"
+                },
+                "interval": {
+                    "type": "integer"
+                },
+                "pre-authorized_code": {
+                    "type": "string"
+                },
+                "tx_code": {
+                    "$ref": "#/definitions/credential.TxCode"
+                }
+            }
+        },
+        "credential.ProofType": {
+            "type": "object",
+            "properties": {
+                "proof_signing_alg_values_supported": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "credential.TxCode": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "input_mode": {
+                    "type": "string"
+                },
+                "length": {
+                    "type": "integer"
+                }
+            }
+        },
+        "gocloak.UserInfoAddress": {
+            "type": "object",
+            "properties": {
+                "country": {
+                    "type": "string"
+                },
+                "formatted": {
+                    "type": "string"
+                },
+                "locality": {
+                    "type": "string"
+                },
+                "postal_code": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.CreateDidPayload": {
+            "type": "object",
+            "properties": {
+                "keyType": {
+                    "$ref": "#/definitions/types.KeyType"
+                }
+            }
+        },
+        "handlers.CreateProofPayload": {
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.FilterResult"
+                    }
+                },
+                "signKeyId": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.DID": {
+            "type": "object",
+            "properties": {
+                "detail": {
+                    "type": "string"
+                },
+                "did": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.Event": {
+            "type": "object",
+            "properties": {
+                "event": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/common.RecordEventType"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.IssueCredentialRequestBody": {
+            "type": "object",
+            "properties": {
+                "payload": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ListCredentialRequestBody": {
+            "type": "object",
+            "properties": {
+                "search": {
+                    "type": "string"
+                }
+            }
+        },
+        "handlers.ListDIDResponse": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.DID"
+                    }
+                }
+            }
+        },
+        "handlers.ListHistoryOutput": {
+            "type": "object",
+            "properties": {
+                "events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handlers.Event"
+                    }
+                }
+            }
+        },
+        "handlers.ListPluginsResponse": {
+            "type": "object",
+            "properties": {
+                "plugins": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/services.Plugin"
+                    }
+                }
+            }
+        },
+        "handlers.SaveConfigrationsRequest": {
+            "type": "object",
+            "required": [
+                "historyLimit",
+                "language"
+            ],
+            "properties": {
+                "historyLimit": {
+                    "type": "integer"
+                },
+                "language": {
+                    "type": "string"
+                }
+            }
+        },
+        "presentation.Alg": {
+            "type": "string",
+            "enum": [
+                "EdDSA",
+                "ES256",
+                "PS256"
+            ],
+            "x-enum-varnames": [
+                "EDDSA",
+                "ES256",
+                "PS256"
+            ]
+        },
+        "presentation.Constraints": {
+            "type": "object",
+            "properties": {
+                "fields": {
+                    "description": "The constraints object MAY contain a fields property",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.Field"
+                    }
+                },
+                "limit_disclosure": {
+                    "description": "The constraints object MAY contain a limit_disclosure property",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/presentation.Disclosure"
+                        }
+                    ]
+                }
+            }
+        },
+        "presentation.Description": {
+            "type": "object",
+            "properties": {
+                "format": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "purpose": {
+                    "type": "string"
+                }
+            }
+        },
+        "presentation.Disclosure": {
+            "type": "string",
+            "enum": [
+                "required",
+                "preferred"
+            ],
+            "x-enum-varnames": [
+                "Required",
+                "Preferred"
+            ]
+        },
+        "presentation.Field": {
+            "type": "object",
+            "properties": {
+                "filter": {
+                    "description": "Optional Field",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/presentation.Filter"
+                        }
+                    ]
+                },
+                "id": {
+                    "description": "Optional Field",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Optional Field",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "Mandatory Field",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "purpose": {
+                    "description": "Optional Field",
+                    "type": "string"
+                }
+            }
+        },
+        "presentation.Filter": {
+            "type": "object",
+            "properties": {
+                "pattern": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "presentation.FilterResult": {
+            "type": "object",
+            "properties": {
+                "credentials": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "description": {
+                    "$ref": "#/definitions/presentation.Description"
+                }
+            }
+        },
+        "presentation.Format": {
+            "type": "object",
+            "properties": {
+                "jwt": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "jwt_vc": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "jwt_vp": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "ldp": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "ldp_vc": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "ldp_vp": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                },
+                "verifiable-credential+sd-jwt": {
+                    "$ref": "#/definitions/presentation.FormatSpecification"
+                }
+            }
+        },
+        "presentation.FormatSpecification": {
+            "type": "object",
+            "properties": {
+                "alg": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.Alg"
+                    }
+                },
+                "proof_type": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.ProofType"
+                    }
+                }
+            }
+        },
+        "presentation.InputDescriptor": {
+            "type": "object",
+            "properties": {
+                "constraints": {
+                    "$ref": "#/definitions/presentation.Constraints"
+                },
+                "format": {
+                    "$ref": "#/definitions/presentation.Format"
+                },
+                "group": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "purpose": {
+                    "type": "string"
+                }
+            }
+        },
+        "presentation.PresentationDefinition": {
+            "type": "object",
+            "properties": {
+                "format": {
+                    "$ref": "#/definitions/presentation.Format"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "input_descriptors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.InputDescriptor"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "purpose": {
+                    "type": "string"
+                },
+                "submission_requirements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/presentation.SubmissionRequirement"
+                    }
+                }
+            }
+        },
+        "presentation.ProofType": {
+            "type": "string",
+            "enum": [
+                "JsonWebSignature2020",
+                "Ed25519Signature2018",
+                "EcdsaSecp256k1Signature2019",
+                "RsaSignature2018"
+            ],
+            "x-enum-varnames": [
+                "JsonWebSignature2020",
+                "Ed25519Signature2018",
+                "EcdsaSecp256k1Signature2019",
+                "RsaSignature2018"
+            ]
+        },
+        "presentation.Rule": {
+            "type": "string",
+            "enum": [
+                "all",
+                "pick"
+            ],
+            "x-enum-varnames": [
+                "All",
+                "Pick"
+            ]
+        },
+        "presentation.SubmissionRequirement": {
+            "type": "object",
+            "properties": {
+                "from": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "purpose": {
+                    "type": "string"
+                },
+                "rule": {
+                    "$ref": "#/definitions/presentation.Rule"
+                }
+            }
+        },
+        "services.CredentialOffer": {
+            "type": "object",
+            "properties": {
+                "groupId": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/credential.IssuerMetadata"
+                },
+                "offering": {
+                    "$ref": "#/definitions/credential.CredentialOfferParameters"
+                },
+                "requestId": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "services.DIDCommConnection": {
+            "type": "object",
+            "properties": {
+                "added": {
+                    "type": "string"
+                },
+                "eventType": {
+                    "type": "string"
+                },
+                "group": {
+                    "type": "string"
+                },
+                "properties": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "protocol": {
+                    "type": "string"
+                },
+                "recipientDids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "remoteDid": {
+                    "type": "string"
+                },
+                "routingKey": {
+                    "type": "string"
+                },
+                "topic": {
+                    "type": "string"
+                }
+            }
+        },
+        "services.Plugin": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "route": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "types.KeyType": {
+            "type": "string",
+            "enum": [
+                "aes256-gcm96",
+                "ed25519",
+                "ecdsa-p256",
+                "ecdsa-p384",
+                "ecdsa-p521",
+                "rsa-2048",
+                "rsa-3072",
+                "rsa-4096",
+                "keyValue"
+            ],
+            "x-enum-varnames": [
+                "Aes256GCM",
+                "Ed25519",
+                "Ecdsap256",
+                "Ecdsap384",
+                "Ecdsap521",
+                "Rsa2048",
+                "Rsa3072",
+                "Rsa4096",
+                "KeyValue"
+            ]
+        }
+    }
+}
