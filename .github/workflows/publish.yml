@@ -8,9 +8,11 @@ on:
 jobs:
   dockerbuild:
     uses: eclipse-xfsc/dev-ops/.github/workflows/dockerbuild.yml@main
+    secrets: inherit
     with: 
       dockerfile: "deployment/docker"
       harbor_config: "deployment/harbor.config"
+      repo_name: pcm-cloud
   helm:
     uses: eclipse-xfsc/dev-ops/.github/workflows/helm.yml@main
     with: 
