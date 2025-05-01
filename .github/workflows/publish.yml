@@ -13,9 +13,10 @@ jobs:
       dockerfile: "deployment/docker/Dockerfile"
       harbor_config: "deployment/harbor.config"
       build_args: pluginRepoUrl=https://gitlab.eclipse.org/eclipse/xfsc/libraries/crypto/engine/plugins/hashicorp-vault-provider.git,pluginVersion=v1.2.3
-      repo_name: pcm-cloud
+      repo_name: account-service
   helm:
     uses: eclipse-xfsc/dev-ops/.github/workflows/helm.yml@main
+    secrets: inherit
     with: 
       buildContext:  "deployment/helm"
       harbor_config: "deployment/harbor.config"
